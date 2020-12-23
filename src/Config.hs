@@ -5,16 +5,17 @@ module Config where
 import qualified Data.Text as T
 import qualified Data.Map as M
 import Text.Parsec
-import Text.Parsec.Text
+    ( anyChar, char, string, manyTill, (<|>), many, parse, try )
+import Text.Parsec.Text ( Parser )
 import qualified Data.Text.IO as TIO
 
-data Conf = Conf (M.Map T.Text T.Text) deriving (Show)
+newtype Conf = Conf (M.Map T.Text T.Text) deriving (Show)
 
 instance Semigroup Conf where
     (Conf a) <> (Conf b) = Conf $ M.union a b
 
 instance Monoid Conf where
-    mempty = Conf $ M.empty
+    mempty = Conf M.empty
 
 config :: Parser Conf
 config = do

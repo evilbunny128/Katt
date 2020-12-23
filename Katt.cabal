@@ -17,7 +17,7 @@ cabal-version:       >=1.10
 
 executable Katt
   main-is:             Main.hs
-  ghc-options:         -threaded
+  ghc-options:         -threaded -O2
   other-modules:       Config
   -- other-extensions:
   build-depends:       base >=4.12 && <4.13,

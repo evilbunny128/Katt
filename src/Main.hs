@@ -30,14 +30,14 @@ runKatt tok cats = do
         }
     TIO.putStrLn userFacingError
    
- 
+
 getCats :: IO [T.Text]
 getCats = T.lines <$> TIO.readFile "catUrls.txt"
 
 
 eventHandler :: [T.Text] -> Event -> DiscordHandler ()
 eventHandler cats event = case event of
-    MessageCreate m -> when (isCat (messageText m) && (not (fromBot m))) $ do
+    MessageCreate m -> when (isCat (messageText m) && not (fromBot m)) $ do
         let n = read . varannan . show $ messageId m
         _ <- restCall 
             (R.CreateMessageEmbed 
@@ -55,7 +55,7 @@ varannan [x] = [x]
 varannan [] = []
 
 isCat :: T.Text -> Bool
-isCat m = "cat" `T.isInfixOf` (T.toLower m) || "katt" `T.isInfixOf` (T.toLower m) 
+isCat m = "cat" `T.isInfixOf` T.toLower m || "katt" `T.isInfixOf` T.toLower m 
 
 fromBot :: Message -> Bool
 fromBot m = userIsBot (messageAuthor m)
