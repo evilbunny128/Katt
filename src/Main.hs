@@ -50,7 +50,12 @@ eventHandler cats event = case event of
 
 
 isCat :: T.Text -> Bool
-isCat m = "cat" `T.isInfixOf` T.toLower m || "katt" `T.isInfixOf` T.toLower m 
+isCat m 
+    =  "cat" `T.isInfixOf` T.toLower m 
+    || "katt" `T.isInfixOf` T.toLower m
+    || "neko" `T.isInfixOf` T.toLower m
+    || "猫" `T.isInfixOf` T.toLower m
+    || "ねこ" `T.isInfixOf` T.toLower m
 
 fromBot :: Message -> Bool
 fromBot m = userIsBot (messageAuthor m)
