@@ -38,7 +38,7 @@ getCats = T.lines <$> TIO.readFile "catUrls.txt"
 eventHandler :: [T.Text] -> Event -> DiscordHandler ()
 eventHandler cats event = case event of
     MessageCreate m -> when (isCat (messageText m) && not (fromBot m)) $ do
-        let n = read . varannan . show $ messageId m
+        let n = read . show $ messageId m
         _ <- restCall 
             (R.CreateMessageEmbed 
                 (messageChannel m) 
@@ -48,11 +48,6 @@ eventHandler cats event = case event of
         pure ()
     _ -> pure ()
 
-
-varannan :: [a] -> [a]
-varannan (x:_:xs) = x : varannan xs
-varannan [x] = [x]
-varannan [] = []
 
 isCat :: T.Text -> Bool
 isCat m = "cat" `T.isInfixOf` T.toLower m || "katt" `T.isInfixOf` T.toLower m 
